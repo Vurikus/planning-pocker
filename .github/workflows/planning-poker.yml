@@ -69,7 +69,8 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: ${{ env.CR_FOLDER }}
           vm-name: ${{ vars.YA_VM_NAME }}
-          vm-service-account-name: dev
+          vm-service-account-id: ${{ secrets.YA_SERVICE_ACCOUNT_ID }}
+#          vm-service-account-name: dev
           vm-cores: 1
           vm-memory: 1Gb
           vm-core-fraction: 5
