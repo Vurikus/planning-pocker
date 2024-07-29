@@ -6,8 +6,8 @@ on:
 
 env:
   BACK_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}:latest
-  CR_REGISTRY: ${{ secret.YA_REGISTRY }}
-  CR_FOLDER: ${{ secret.YA_FOLDER_ID }}
+  CR_REGISTRY: ${{ secrets.YA_REGISTRY }}
+  CR_FOLDER: ${{ secrets.YA_FOLDER_ID }}
   CR_REPOSITORY: planning-poker
 
 jobs:
