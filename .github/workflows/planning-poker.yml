@@ -1,4 +1,5 @@
 name: planning-poker
+run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   push:
     branches:
