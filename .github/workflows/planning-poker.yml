@@ -31,14 +31,17 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: Build and push image to Yandex Cloud Container Registry
+        run: echo "${{ env.YA_REGISTRY }} ${{ env.CURRENT_DOCKERHUB_REPO }}"
+
+      - name: Build and push image to Yandex Cloud Container Registry
         if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'
         env:
           CR_REGISTRY: ${{ env.YA_REGISTRY }}
           CR_REPOSITORY: planning-poker
         run: |
           echo "$CR_REGISTRY $CR_REPOSITORY ${{ env.YA_REGISTRY }}"
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
 
       - name: Login to Docker Hub
         if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'DOCKERHUB'
