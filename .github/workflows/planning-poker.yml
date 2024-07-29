@@ -31,7 +31,7 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: TEST
-        run: echo "${{ vars.CURRENT_DOCKERHUB_REPO == 'YANDEX'}} / ${{ vars.CURRENT_DOCKERHUB_REPO == YANDEX}} "
+        run: echo "${{ vars.CURRENT_DOCKERHUB_REPO == 'YANDEX'}} "
 #
 #      - name: Build and push image to Yandex Cloud Container Registry
 #        if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'
