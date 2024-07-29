@@ -31,12 +31,12 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: TEST
-        run: echo "${{ vars.YA_REGISTRY}} / ${{ vars.CURRENT_DOCKERHUB_REPO }} / ${{ vars.YANDEX.YA_REGISTRY}}"
+        run: echo "${{ vars.YA_REGISTRY}} / ${{ vars.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'"
 
       - name: Build and push image to Yandex Cloud Container Registry
         if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'
         env:
-          CR_REGISTRY: ${{ env.YA_REGISTRY }}
+          CR_REGISTRY: ${{ vars.YA_REGISTRY }}
           CR_REPOSITORY: planning-poker
         run: |
           echo "$CR_REGISTRY $CR_REPOSITORY ${{ env.YA_REGISTRY }}"
