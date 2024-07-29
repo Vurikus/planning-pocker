@@ -28,7 +28,7 @@ jobs:
 #        if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'
         uses: yc-actions/yc-cr-login@v2
         with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          yc-sa-json-credentials: ${{ YANDEX.secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: Build and push image to Yandex Cloud Container Registry
         if: ${{ env.CURRENT_DOCKERHUB_REPO }} == 'YANDEX'
