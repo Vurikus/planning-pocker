@@ -36,6 +36,7 @@ jobs:
           CR_REGISTRY: ${{ env.YA_REGISTRY }}
           CR_REPOSITORY: planning-poker
         run: |
+          echo "$CR_REGISTRY $CR_REPOSITORY ${{ env.YA_REGISTRY }}"
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY
 
