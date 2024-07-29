@@ -5,7 +5,10 @@ on:
       - master
 
 env:
-  BACK_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+  BACK_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}:latest
+  CR_REGISTRY: ${{ secret.YA_REGISTRY }}
+  CR_FOLDER: ${{ secret.YA_FOLDER_ID }}
+  CR_REPOSITORY: planning-poker
 
 jobs:
   build-and-push-core:
@@ -32,12 +35,9 @@ jobs:
 
       - name: Build and push image to Yandex Cloud Container Registry
         if: ${{ vars.CURRENT_DOCKERHUB_REPO == 'YANDEX'}}
-        env:
-          CR_REGISTRY: ${{ vars.YA_REGISTRY }}
-          CR_REPOSITORY: planning-poker
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:latest
+          docker build -t cr.yandex/${{ env.CR_REGISTRY }}/${{ env.CR_REPOSITORY }}:latest .
+          docker push cr.yandex/${{ env.CR_REGISTRY }}/${{ env.CR_REPOSITORY }}:latest
 
       - name: Login to Docker Hub
         if: ${{ vars.CURRENT_DOCKERHUB_REPO == 'DOCKERHUB'}}
@@ -62,6 +62,20 @@ jobs:
           context: .
           push: true
           tags: ${{ env.BACK_IMAGE }}:latest
+
+      - name: Deploy to Yandex Cloud
+        uses: yc-actions/yc-coi-deploy@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: ${{ env.CR_FOLDER }}
+          vm-name: ${{ vars.YA_VM_NAME }}
+          vm-service-account-name: dev
+          vm-cores: 1
+          vm-memory: 1Gb
+          vm-core-fraction: 5
+          vm-subnet-id: ${{ secrets.YA_VM_SUBNET_ID }}
+          user-data-path: './yandex-cloud/user.yaml'
+          docker-compose-path: './yandex-cloud/docker-compose.yaml'
 
   deploy:
     runs-on: ubuntu-latest
