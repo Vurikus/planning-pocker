@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: TEST
-        run: echo "1. ${{ vars.YA_REGISTRY }}, 2. ${{ vars.YANDEX.YA_REGISTRY }}"
+        run: echo "1. ${{ vars.YA_REGISTRY }}, 2. ${{ vars.YANDEX.YA_REGISTRY }}, 3. ${{ vars.YANDEX }}"
 #
 #      - name: Git clone
 #        uses: actions/checkout@v4
