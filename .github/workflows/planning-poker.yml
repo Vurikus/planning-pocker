@@ -55,7 +55,7 @@ jobs:
           tags: latest
           labels: latest
 
-      - name: Build and push Docker image
+      - name: Build and Push Docker image
         if: ${{ vars.CURRENT_DOCKERHUB_REPO == 'DOCKERHUB'}}
         uses: docker/build-push-action@v5
         with:
