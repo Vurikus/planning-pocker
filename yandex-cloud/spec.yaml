@@ -1,0 +1,47 @@
+folder_id: b1gko6sk3e4fc8am91br
+name: planning-poker-group
+service_account_id: ajetb8bsng83p0msql2a
+
+instance_template:
+  platform_id: standard-v3
+  resources_spec:
+    memory: 1g
+    cores: 2
+    core_fraction: 5
+  boot_disk_spec:
+    mode: READ_WRITE
+    disk_spec:
+      image_id: fd870suu28d40fqp8srr
+      type_id: network-hdd
+      size: 10g
+  network_interface_specs:
+    - network_id: enpin4t1m9vbrs5v8o5u
+      primary_v4_address_spec: {
+        one_to_one_nat_spec: {
+          ip_version: IPV4
+        }
+      }
+  scheduling_policy:
+    preemptible: true
+  metadata:
+    user-data: |-
+      #cloud-config
+        package_update: true
+        runcmd:
+          - [apt-get, install, -y, nginx ]
+          - [/bin/bash, -c, 'source /etc/lsb-release; sed -i "s/Welcome to nginx/It is $(hostname) on $DISTRIB_DESCRIPTION/" /var/www/html/index.nginx-debian.html']
+  network_settings:
+    type: STANDARD
+deploy_policy:
+  max_unavailable: 1
+  max_expansion: 0
+scale_policy:
+  fixed_scale:
+    size: 3
+allocation_policy:
+  zones:
+    - zone_id: ru-central1-b
+
+load_balancer_spec:
+  target_group_spec:
+    name: planning-poker-balancer
