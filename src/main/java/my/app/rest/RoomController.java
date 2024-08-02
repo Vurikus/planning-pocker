@@ -1,14 +1,27 @@
 package my.app.rest;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import my.app.object.Room;
+import my.app.object.Rooms;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 public class RoomController {
 
-    @GetMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+//    @GetMapping("/")
+//    public String index() {
+//        return "Greetings from Spring Boot!";
+//    }
+
+
+    @GetMapping("/room/{roomId}")
+    public Room get(@PathVariable("roomId") String roomId) {
+        return Rooms.getRoom(roomId);
+    }
+
+    @PostMapping("/room")
+    public Room createRoom(@RequestParam(value = "admin", required = false, defaultValue = "admin") String adminName) {
+        return Rooms.newRoom(adminName);
     }
 }
